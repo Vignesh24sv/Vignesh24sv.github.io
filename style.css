@@ -208,6 +208,10 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.5rem); letter-spacing: -0.03em; line-heig
   padding: 3px 9px; border-radius: 6px; border: 1px solid var(--border); color: var(--muted);
 }
 
+.cards-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 900px) { .cards-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .cards-3 { grid-template-columns: 1fr; } }
+
 /* SKILLS */
 .skill-groups { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .skill-group { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; }
