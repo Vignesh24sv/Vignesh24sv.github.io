@@ -25,6 +25,30 @@ navLinks.querySelectorAll("a").forEach((a) =>
 const nav = document.getElementById("nav");
 addEventListener("scroll", () => nav.classList.toggle("scrolled", scrollY > 10), { passive: true });
 
+// Highlight the nav link for the section currently in view
+const navAnchors = [...navLinks.querySelectorAll('a[href^="#"]')];
+const spySections = navAnchors
+  .map((a) => document.querySelector(a.getAttribute("href")))
+  .filter(Boolean);
+
+function updateActiveLink() {
+  const line = scrollY + innerHeight * 0.35;
+  let current = null;
+  for (const sec of spySections) {
+    if (sec.offsetTop <= line) current = sec;
+  }
+  // At the very bottom, the last section wins even if it's short
+  if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) {
+    current = spySections[spySections.length - 1];
+  }
+  navAnchors.forEach((a) =>
+    a.classList.toggle("active", !!current && a.getAttribute("href") === "#" + current.id)
+  );
+}
+addEventListener("scroll", updateActiveLink, { passive: true });
+addEventListener("resize", updateActiveLink);
+updateActiveLink();
+
 // Reveal on scroll
 const observer = new IntersectionObserver(
   (entries) => entries.forEach((e) => {
